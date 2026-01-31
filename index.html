@@ -1,690 +1,87 @@
-<!-- ============ HEAD ============ -->
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MisinfoX – Detect. Highlight. Stay Informed.</title>
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
-
-  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- AOS (Animate on Scroll) -->
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
-  <!-- Feather Icons -->
   <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-
-  <!-- Vanta.js -->
   <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
-
-  <!-- Anime.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-
-  <style>
-    /* ============ COLOR PALETTE ============ */
-   :root{
---teal:#0f7173;
---sky:#86bbd8;
---crimson:#c3423f;
---navy:#1b3b6f;
---yellow:#ffe347;
---peach:#fcaa67;
-
-/* Light theme */
---bg-light:#f7fbff;
---text-light:#0e1a2b;
---card-bg-light:#ffffff;
---card-border-light:#e6eef7;
-
-/* Dark theme base */
---bg-dark:#0b1324;
---text-dark:#eaf2ff;
---card-bg-dark:#111a30;
---card-border-dark:#1a2540;
-
-/* Richer accents */
---yellow-dark:#caa800;
---navy-dark:#0d2b6f;
-
-}
-
-    /* ============ THEMES ============ */
-    body.light {
-      background: var(--bg-light);
-      color: var(--text-light);
-    }
-    body.dark {
-      background: var(--bg-dark);
-      color: var(--text-dark);
-    }
-    body.light #hero h1{ color:var(--navy-dark); }
-    body.dark #hero h1{ color:var(--purple-soft); }
-
-    /* ============ NAVBAR ============ */
-    nav {
-      transition: background-color .3s ease, border-color .3s ease;
-    }
-    nav.light {
-      background: #ffffff;
-      border-bottom: 1px solid var(--card-border-light);
-    }
-    nav.dark {
-      background: #0d1630;
-      border-bottom: 1px solid var(--card-border-dark);
-    }
-    nav a {
-      transition: all .3s ease;
-    }
-
-    /* ============ BUTTONS ============ */
-    .btn-download {
-      background: var(--peach);
-      color: #1a1a1a;
-    }
-    .btn-download:hover {
-      background: #f7974b;
-    }
-
-    .btn-outline {
-      border: 2px solid var(--sky);
-      color: var(--navy);
-      background: transparent;
-    }
-    .btn-outline:hover {
-      background: var(--sky);
-      color: #0c2340;
-    }
-    body.dark .btn-outline {
-      border-color: var(--yellow);
-      color: var(--yellow);
-    }
-    body.dark .btn-outline:hover {
-      background: var(--yellow);
-      color: #1a1a1a;
-    }
-
-    /* ============ CARDS ============ */
-    .feature-card,
-    #how-it-works .p-6 {
-      border: 1px solid transparent;
-    }
-    body.light .feature-card,
-    body.light #how-it-works .p-6 {
-      background: var(--card-bg-light);
-      border-color: var(--card-border-light);
-    }
-    body.dark .feature-card,
-    body.dark #how-it-works .p-6 {
-      background: var(--card-bg-dark);
-      border-color: var(--card-border-dark);
-    }
-    .feature-card h3 {
-      color: var(--primary);
-    }
-    body.dark .feature-card h3 {
-      color: var(--sky);
-    }
-
-    /* ============ HERO ============ */
-    #hero h1 {
-      color: var(--yellow);
-    }
-    #hero p {
-      color: #f1f5ff;
-    }
-
-    /* ============ LINK UNDERLINE ============ */
-    .nav-link span {
-      background: linear-gradient(90deg, var(--sky), var(--peach));
-    }
-
-    /* ============ THEME TOGGLE ============ */
-    #theme-toggle {
-      background: transparent;
-      border: 1px solid rgba(134, 187, 216, .35);
-    }
-    body.dark #theme-toggle {
-      border-color: rgba(255, 227, 71, .35);
-    }
-
-    /* ============ TEAM IMAGE EFFECT ============ */
-    .team-img {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-      object-position: top center;
-      transition: transform .4s ease;
-    }
-    .team-card:hover .team-img {
-      transform: scale(1.05);
-    }
-    
-    /* Bigger circular avatars with soft shadow and hover pulse */
-#team .avatar-wrap{
-height:136px; 
-width:136px;
-margin-left:auto;
-margin-right:auto;
-border-radius:9999px;
-overflow:hidden;
-background:#ffffff;
-box-shadow:
-0 14px 28px rgba(0,0,0,.15),
-0 0 0 0 rgba(167,139,250,.0); 
-transition:transform .25s ease, box-shadow .35s ease;
-position:relative;
-}
-
-/* Remove visible ring; we’ll use glow instead */
-#team .avatar-wrap::after{
-content:"";
-position:absolute; inset:0;
-border-radius:inherit;
-box-shadow:0 0 0 3px rgba(167,139,250,.0) inset;
-transition:box-shadow .35s ease;
-}
-
-/* Image fit */
-#team .avatar-img{ height:100%; width:100%; object-fit:cover; object-position:center; }
-
-/* Hover animation: lift + glow */
-#team article:hover .avatar-wrap{
-transform:translateY(-4px) scale(1.03);
-box-shadow:
-0 18px 36px rgba(0,0,0,.22),
-0 0 0 10px rgba(167,139,250,.18);
-}
-#team article:hover .avatar-wrap::after{
-box-shadow:0 0 0 3px rgba(167,139,250,.45) inset;
-}
-
-/* Dark mode: stronger glow on dark */
-body.dark #team article:hover .avatar-wrap{
-box-shadow:
-0 22px 44px rgba(0,0,0,.35),
-0 0 0 12px rgba(196,181,253,.22);
-}
-body.dark #team .avatar-wrap::after{
-box-shadow:0 0 0 2px rgba(196,181,253,.15) inset;
-}
-
-/* Name emphasis */
-#team h3{
-font-weight:800;
-letter-spacing:.2px;
-color:#0e1a2b;
-}
-body.dark #team h3{ color:#e8e9ff; }
-
-/* Optional subtle underline on hover */
-#team article:hover h3{
-text-decoration:underline;
-text-decoration-color:rgba(167,139,250,.65);
-text-underline-offset:4px;
-}
-    /* ============ PARTICLES ============ */
-    .particle {
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: rgba(255, 227, 71, .8);
-      filter: blur(3px);
-      pointer-events: none;
-    }
-
-    /* ============ AOS ============ */
-    [data-aos] {
-      opacity: 0;
-      transition-property: opacity, transform;
-    }
-    .aos-animate {
-      opacity: 1 !important;
-      transform: translate(0, 0) !important;
-    }
-
-    /* ============ FOOTER ============ */
-footer.footer {
-    background: #f3f4f6; /* light grey */
-    color: #1f2937; /* dark text */
-    border-top: 1px solid #e5e7eb; /* subtle divider */
-  }
-
-  footer.footer a {
-    color: #374151;
-  }
-
-  footer.footer a:hover {
-    color: #111827;
-  }
-
-  footer.footer h2,
-  footer.footer h3 {
-    color: #111827;
-  }
-
-  footer.footer .footer-divider {
-    border-color: #e5e7eb;
-    color: #6b7280;
-  }
-
-  /* Dark mode footer still cohesive */
-  body.dark footer.footer {
-    background: #0f172a;
-    color: #e5e7eb;
-    border-top: 1px solid #1f2937;
-  }
-
-  body.dark footer.footer a {
-    color: #cbd5e1;
-  }
-
-  body.dark footer.footer a:hover {
-    color: #ffffff;
-  }
-
-  body.dark footer.footer h2,
-  body.dark footer.footer h3 {
-    color: #ffffff;
-  }
-
-  body.dark footer.footer .footer-divider {
-    border-color: #1f2937;
-    color: #94a3b8;
-  }
-
-  /* Global text defaults in light mode */
-  body.light h1,
-  body.light h2,
-  body.light h3,
-  body.light h4,
-  body.light h5,
-  body.light h6 {
-    color: #0e1a2b; /* strong heading color */
-  }
-
-  body.light p,
-  body.light li,
-  body.light span,
-  body.light .text-base,
-  body.light .text-lg,
-  body.light .text-xl {
-    color: #1b2a3c; /* readable body color */
-  }
-
-  /* Hero copy should not stay white in light mode */
-  body.light #hero h1 {
-    color: #1b3b6f; /* navy heading */
-  }
-  body.light #hero p {
-    color: #334155; /* slate body */
-  }
-
-  /* If a gradient or bg clip applied, keep it dark enough */
-  body.light .text-on-light {
-    color: #0f172a;
-  }
-
-  /* Cards in light mode: text and borders */
-  body.light .feature-card,
-  body.light #how-it-works .p-6 {
-    background: var(--card-bg-light);
-    border: 1px solid var(--card-border-light);
-    color: #0e1a2b;
-  }
-  body.light .feature-card h3 {
-    color: #1b3b6f;
-  }
-  body.light .feature-card p {
-    color: #334155;
-  }
-
-  /* Buttons stay visible on white */
-  body.light .btn-download {
-    background: var(--peach);
-    color: #1a1a1a;
-  }
-  body.light .btn-outline {
-    border-color: var(--navy);
-    color: var(--navy);
-  }
-  body.light .btn-outline:hover {
-    background: var(--navy);
-    color: #ffffff;
-  }
-
-  /* Utility: neutralize any white/opacity text used for dark sections */
-  body.light .text-white,
-  body.light .text-white\/80,
-  body.light .text-white\/85,
-  body.light .text-white\/70 {
-    color: #1b2a3c !important;
-  }
-
-  /* Sections with dark backgrounds only in dark mode */
-  body.light .dark-section {
-    background: #ffffff !important;
-  }
-
-  /* Vanta hero overlay: keep it subtle in light */
-  body.light #vanta-bg {
-    opacity: 0.08; /* prevents washing out text */
-  }
-body.light .chip-web,.body.light .pill-web,
-body.light .tab-web{
-background:#e2eafc;
-color:#0d2b6f;
-border:1px solid rgba(13,43,111,.35);
-}
-body.light .chip-claims,.body.light .pill-claims,
-body.light .tab-claims{
-background:#fff0a6;
-color:#caa800;
-border:1px solid rgba(202,168,0,.45);
-}
-
-/* The dark bluish quote card inside hero */
-body.light .hero-quote{ background:#2b497a; color:#eef3ff; }
-body.light .btn-outline{ border-color:#1b3b6f; color:#1b3b6f; }
-/* Overall dark background tilt to purple */
-body.dark{
-background:linear-gradient(180deg,#0b0f17 0%, var(--purple-deep) 55%);
-color:var(--text-dark);
-}
-
-/* Hero title and subtle glow */
-body.dark #hero h1{
-color:#c4b5fd;
-text-shadow:0 0 24px rgba(124,58,237,.35);
-}
-
-/* Web / Claims chips and tabs */
-body.dark .chip-web, body.dark .pill-web, body.dark .tab-web{
-background:rgba(124,58,237,.22);
-color:#e9d5ff;
-border:1px solid rgba(196,181,253,.5);
-}
-body.dark .chip-claims, body.dark .pill-claims, body.dark .tab-claims{
-background:#2a1848;
-color:#f5e1ff;
-border:1px solid rgba(196,181,253,.45);
-}
-
-/* Quote block and CTA contrast */
-body.dark .hero-quote{ background:#1e1235; color:#e9e6ff; }
-body.dark .btn-outline{ border-color:#c4b5fd; color:#c4b5fd; }
-body.dark .btn-outline:hover{ background:#c4b5fd; color:#1a1230; }
-
-
-body.light .btn-download{ background:#ffb26b; box-shadow:0 8px 22px rgba(252,170,103,.3); }
-body.light .btn-download:hover{ background:#ffa252; }
-body.light .btn-outline{ border-color:#0d2b6f; color:#0d2b6f; }
-body.light .btn-outline:hover{ background:#0d2b6f; color:#ffffff; }
-
-/* Fix selector typo and enforce vivid colors */
-body.light .chip-web,
-body.light .pill-web,
-body.light .tab-web{
-background:#e2eafc !important;
-color:#0d2b6f !important;
-border:1px solid rgba(13,43,111,.35) !important;
-}
-
-body.light .chip-claims,
-body.light .pill-claims,
-body.light .tab-claims{
-background:#fff0a6 !important;
-color:#caa800 !important;
-border:1px solid rgba(202,168,0,.45) !important;
-}
-
-/* Hero title and sub in light/dark */
-body.light .hero-title{ color:#0d2b6f !important; text-shadow:0 1px 0 rgba(13,43,111,.06); }
-body.dark .hero-title{ color:#c4b5fd !important; text-shadow:0 0 24px rgba(124,58,237,.35); }
-
-body.light .hero-sub{ color:#334155 !important; }
-body.dark .hero-sub{ color:#e9e6ff !important; }
-
-/* Quote card skins */
-body.light .hero-quote{ background:#2b497a !important; color:#eef3ff !important; border:1px solid rgba(134,187,216,.25); }
-body.dark .hero-quote{ background:#1e1235 !important; color:#e9e6ff !important; border:1px solid rgba(196,181,253,.35); }
-
-/* Card title text inside chips */
-.card-title{ color:#0e1a2b; }
-body.dark .card-title{ color:#eaf2ff; }
-
-/* ===== Dark mode: surfaces dark, text light ===== */
-body.dark{
---dm-bg:#0b0f17;
---dm-surface:#0d1320; 
---dm-panel:#0f172a; 
---dm-border:#1f2a3a;
---dm-text:#e6e9f5; 
---dm-muted:#b7c0d8; 
---dm-accent:#c4b5fd;
---dm-accent-2:#86bbd8; 
-background:var(--dm-bg) !important;
-color:var(--dm-text) !important;
-}
-
-/* Global text colors */
-body.dark h1, body.dark h2, body.dark h3,
-body.dark h4, body.dark h5, body.dark h6{ color:var(--dm-accent) !important; }
-body.dark p, body.dark li, body.dark span{ color:var(--dm-text) !important; }
-body.dark .muted{ color:var(--dm-muted) !important; }
-
-/* Navbar (kept same structure, darker tone) */
-body.dark nav.dark{ background:#0b1020 !important; border-bottom:1px solid var(--dm-border) !important; }
-body.dark nav a{ color:var(--dm-text) !important; }
-body.dark .nav-link span{ background:linear-gradient(90deg,#a78bfa,#86bbd8) !important; }
-
-/* Cards, sections, panels */
-body.dark .feature-card,
-body.dark #how-it-works .p-6,
-body.dark .hero-quote,
-body.dark .rounded-2xl,
-body.dark .rounded-xl{
-background:var(--dm-panel) !important;
-border:1px solid var(--dm-border) !important;
-color:var(--dm-text) !important;
-}
-
-/* Hero */
-body.dark .hero-title{ color:var(--dm-accent) !important; text-shadow:0 0 24px rgba(124,58,237,.28); }
-body.dark .hero-sub{ color:var(--dm-muted) !important; }
-
-/* Tabs / chips */
-body.dark .chip-web, body.dark .tab-web{ background:#1a2140 !important; color:#dfe5ff !important; border:1px solid #2a3152 !important; }
-body.dark .chip-claims, body.dark .tab-claims{ background:#24193f !important; color:#efe6ff !important; border:1px solid #3a2c66 !important; }
-
-/* Buttons */
-body.dark .btn-download{ background:#a78bfa !important; color:#0f0f16 !important; }
-body.dark .btn-download:hover{ background:#9b82fa !important; }
-body.dark .btn-outline{ border-color:#a78bfa !important; color:#a78bfa !important; }
-body.dark .btn-outline:hover{ background:#a78bfa !important; color:#0f0f16 !important; }
-
-/* Icons, dividers, focus */
-body.dark [data-feather]{ color:var(--dm-accent) !important; }
-body.dark hr, body.dark .divider, body.dark .footer-divider{ border-color:var(--dm-border) !important; }
-body.dark :focus-visible{ outline:2px solid var(--dm-accent) !important; outline-offset:2px; }
-
-/* Footer */
-body.dark footer.footer{
-background:#0b0f17 !important;
-color:var(--dm-muted) !important;
-border-top:1px solid var(--dm-border) !important;
-}
-body.dark footer.footer h2, body.dark footer.footer h3{ color:var(--dm-text) !important; }
-body.dark footer.footer a{ color:var(--dm-accent-2) !important; }
-body.dark footer.footer a:hover{ color:#eaf2ff !important; }
-
-/* Neutralize any leftover light BG utilities inside dark mode */
-body.dark [class="bg-white"],
-body.dark [style*="background: #fff"],
-body.dark .bg-gray-50,
-body.dark .bg-slate-50{
-background:var(--dm-surface) !important;
-color:var(--dm-text) !important;
-}
-
-/* Ensure hero background (Vanta overlay) stays dark */
-body.dark #vanta-bg{ background:transparent !important; opacity:.25; }
-body.light .footer-logo-light{ display:block !important; }
-body.light .footer-logo-dark{ display:none !important; }
-body.dark .footer-logo-light{ display:none !important; }
-body.dark .footer-logo-dark{ display:block !important; }
-/* Team circular avatar helper */
-#team img{ object-fit:cover; object-position:center; }
-
-/* Optional: larger avatar on hover */
-#team article:hover .ring-4{ box-shadow:0 0 0 8px rgba(134,187,216,.25); transition:box-shadow .25s ease; }
-
-/* Light mode text adjustments for readability */
-body.light #team p{ color:#1b2a3c; }
-body.light #team .text-white{ color:#0e1a2b; }
-body.light #team .text-white{ color:#334155; }
-
-/* ================= CUSTOM CURSOR ================= */
-#cursor-glow{
-position:fixed;
-pointer-events:none;
-width:100px;
-height:100px;
-border-radius:50%;
-background:radial-gradient(
-closest-side,
-rgba(40,10,80,.85),
-rgba(40,10,80,.35) 52%,
-rgba(40,10,80,0) 70%
-);
-
-mix-blend-mode:difference;
-filter:blur(9px);
-opacity:.0;
-transform:translate(-50%,-50%);
-transition:opacity .08s linear;
-z-index:99999;
-}
-
-body.dark #cursor-glow{
-mix-blend-mode:screen;
-background:radial-gradient(
-closest-side,
-rgba(140,70,255,.60),
-rgba(140,70,255,.25) 52%,
-rgba(140,70,255,0) 70%
-);
-filter:blur(11px);
-}
-/* Hide default cursor site‑wide */
-html, body{ cursor:none; }
-input, textarea{ cursor:text; }
-button, a{ cursor:default; }
-
-/* In light mode, soften blend so it doesn’t wash text */
-body.light #cursor-glow{ mix-blend-mode:multiply; filter:blur(22px); opacity:.0; }
-
-/* Respect reduced motion */
-@media (prefers-reduced-motion: reduce){
-#cursor-glow{ transition:none; }
-}
-@media (pointer: coarse), (any-hover: none){
-html, body{ cursor:auto; }
-}
-
-/* ================= WHATSAPP BOT SECTION ================= */
-#whatsapp-bot .steps-col{ max-width:520px; } 
-#whatsapp-bot .compact-card{
-padding:.7rem .85rem !important; 
-border-radius:.6rem !important;
-}
-#whatsapp-bot .compact-card h3{ font-size:.95rem !important; }
-#whatsapp-bot .compact-card p{ font-size:.84rem !important; line-height:1.25rem !important; }
-#whatsapp-bot .cta-row a{ padding:.6rem 1rem !important; font-size:.9rem !important; }
-
-/* Reduce vertical spacing */
-#whatsapp-bot .stack-tight > * + *{ margin-top:.65rem; }
-
-/* Limit gallery image height so screenshots don’t dominate */
-#whatsapp-bot figure img{ max-height:420px; object-fit:cover; }
-@media (min-width:1024px){
-#whatsapp-bot figure img{ max-height:360px; }
-}
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 
    <div id="cursor-glow"></div>
-<!-- ============ BODY ============ -->
 <body class="light font-sans antialiased relative">
 
-  <!-- ================= NAVBAR ================= -->
-  <nav id="navbar" class="sticky top-0 z-50 light shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-20">
-      <!-- Logo -->
-      <div class="flex-shrink-0">
-        <img class="logo-light block h-12 w-auto" src="assets/light-mode.png" alt="MisinfoX Light Logo">
-        <img class="logo-dark hidden h-12 w-auto" src="assets/dark-mode.png" alt="MisinfoX Dark Logo">
-      </div>
+<nav id="navbar" class="sticky top-0 z-50 light shadow-sm relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center h-20">
 
-      <!-- Nav Links -->
-      <div class="hidden sm:flex sm:space-x-6">
-        <a href="#" class="nav-link px-3 py-2 text-sm font-medium relative group">
-          Home
-          <span class="absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full"></span>
-        </a>
-        <a href="#features" class="nav-link px-3 py-2 text-sm font-medium relative group">
-          Features
-          <span class="absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full"></span>
-        </a>
-        <a href="#how-it-works" class="nav-link px-3 py-2 text-sm font-medium relative group">
-          How It Works
-          <span class="absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full"></span>
-        </a>
-        <a href="#team" class="nav-link px-3 py-2 text-sm font-medium relative group">
-          Team
-          <span class="absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full"></span>
-        </a>
-      </div>
-
-      <!-- Actions -->
-      <div class="flex items-center space-x-4">
-        <!-- Theme Toggle -->
-        <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200/20 dark:hover:bg-gray-700/50 transition-colors" aria-label="Toggle theme">
-          <!-- Sun -->
-          <svg class="block dark:hidden w-5 h-5" viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="12" r="4" fill="#ffe347"></circle>
-            <g stroke="#fcaa67" stroke-width="1.5">
-              <path d="M12 2v3"></path>
-              <path d="M12 19v3"></path>
-              <path d="M2 12h3"></path>
-              <path d="M19 12h3"></path>
-              <path d="M4.2 4.2l2.1 2.1"></path>
-              <path d="M17.7 17.7l2.1 2.1"></path>
-              <path d="M4.2 19.8l2.1-2.1"></path>
-              <path d="M17.7 6.3l2.1-2.1"></path>
-            </g>
-          </svg>
-          <!-- Moon -->
-          <svg class="hidden dark:block w-5 h-5" viewBox="0 0 24 24" fill="none">
-            <path d="M21 12.5c-1.1.5-2.3.8-3.6.8A7.9 7.9 0 019.5 5.9c0-1.3.3-2.5.8-3.6A9 9 0 1021 12.5z" fill="#86bbd8"></path>
-            <circle cx="16.5" cy="7.5" r="1" fill="#ffe347"></circle>
-            <circle cx="18.5" cy="9.5" r="0.6" fill="#ffe347"></circle>
-          </svg>
-        </button>
-
-        <!-- Download -->
-        <a href="#" class="btn-download px-4 py-2 rounded-md text-sm font-medium flex items-center shadow-md">
-          <img src="assets/download1.png" alt="Chrome" class="w-4 h-4 mr-2">Download Extension
-        </a>
-
-        <!-- WhatsApp Bot -->
-      <a href="http://wa.me/+14155238886?text=join%20same-themselves" target="_blank" rel="noopener noreferrer" class="bg-[var(--teal)] hover:bg-[#0d5e60] text-white px-4 py-2 rounded-md text-sm font-medium flex items-center shadow-md">
-<i data-feather="message-square" class="mr-2 w-4 h-4"></i>WhatsApp Bot
-</a>
-      </div>
+    <!-- LEFT: Logo -->
+    <div class="flex-shrink-0">
+      <img class="logo-light block h-12 w-auto" src="assets/light-mode.png" alt="MisinfoX Light Logo">
+      <img class="logo-dark hidden h-12 w-auto" src="assets/dark-mode.png" alt="MisinfoX Dark Logo">
     </div>
-  </nav>
+
+    <!-- CENTER: Nav Links (ABSOLUTELY CENTERED) -->
+    <div class="hidden sm:flex space-x-6 absolute left-1/2 -translate-x-1/2">
+      <a href="#" class="nav-link px-3 py-2 text-sm font-medium relative group">
+        Home
+        <span class="absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full"></span>
+      </a>
+
+      <a href="#features" class="nav-link px-3 py-2 text-sm font-medium relative group">
+        Features
+        <span class="absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full"></span>
+      </a>
+
+      <a href="#how-it-works" class="nav-link px-3 py-2 text-sm font-medium relative group">
+        How It Works
+        <span class="absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full"></span>
+      </a>
+    </div>
+
+    <!-- RIGHT: Actions -->
+    <div class="ml-auto flex items-center space-x-4">
+      <!-- Theme Toggle -->
+      <button
+        id="theme-toggle"
+        class="p-2 rounded-full hover:bg-gray-200/20 dark:hover:bg-gray-700/50 transition-colors"
+        aria-label="Toggle theme"
+      >
+        <!-- Sun -->
+        <svg class="block dark:hidden w-5 h-5" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="4" fill="#ffe347"></circle>
+          <g stroke="#fcaa67" stroke-width="1.5">
+            <path d="M12 2v3"></path>
+            <path d="M12 19v3"></path>
+            <path d="M2 12h3"></path>
+            <path d="M19 12h3"></path>
+            <path d="M4.2 4.2l2.1 2.1"></path>
+            <path d="M17.7 17.7l2.1 2.1"></path>
+            <path d="M4.2 19.8l2.1-2.1"></path>
+            <path d="M17.7 6.3l2.1-2.1"></path>
+          </g>
+        </svg>
+
+        <!-- Moon -->
+        <svg class="hidden dark:block w-5 h-5" viewBox="0 0 24 24" fill="none">
+          <path d="M21 12.5c-1.1.5-2.3.8-3.6.8A7.9 7.9 0 019.5 5.9c0-1.3.3-2.5.8-3.6A9 9 0 1021 12.5z" fill="#86bbd8"></path>
+          <circle cx="16.5" cy="7.5" r="1" fill="#ffe347"></circle>
+          <circle cx="18.5" cy="9.5" r="0.6" fill="#ffe347"></circle>
+        </svg>
+      </button>
+
+      <!-- Download Button -->
+      <a href="https://github.com/Tamanna-3/MisinfoX-Chrome-Extension" target="_blank"    class="btn-download px-4 py-2 rounded-md text-sm font-medium flex items-center shadow-md">
+        <img src="assets/download1.png" alt="Chrome" class="w-4 h-4 mr-2">
+        Download Extension
+      </a>
+    </div>
+
+  </div>
+</nav>
 
 
 <!-- ================= HERO================= -->
@@ -722,14 +119,6 @@ border-radius:.6rem !important;
     </div>
   </div>
 
-  <!-- Floating WhatsApp Bot Button -->
-  <a href="http://wa.me/+14155238886?text=join%20same-themselves" 
-     class="fixed bottom-8 right-8 z-50 flex items-center gap-3 bg-green-500 hover:bg-green-600 text-white font-semibold px-5 py-3 rounded-full shadow-[0_0_25px_rgba(34,197,94,0.6)] transition-all duration-300 hover:scale-110"  target="_blank" 
-  rel="noopener noreferrer" >
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="w-6 h-6" >
-    Chat with Bot
-  </a>
-
   <!-- Floating Elements -->
   <div class="absolute top-20 left-16 w-3 h-3 bg-[var(--sky)] rounded-full blur-md animate-pulse"></div>
   <div class="absolute bottom-28 right-20 w-4 h-4 bg-[var(--peach)] rounded-full blur-md animate-bounce"></div>
@@ -739,427 +128,132 @@ border-radius:.6rem !important;
 
 
 <!-- ================= FEATURES SECTION ================= -->
- <section id="features" class="py-20 transition-all duration-500">
-    <div class="max-w-7xl mx-auto px-6 text-center">
-        <h2 class="text-4xl sm:text-5xl font-bold mb-4 text-[var(--text-color)]">
-            Smarter<span class="text-[#00FF7F]"> Verification</span>, Stronger Awareness
-        </h2>
-        <p class="text-[var(--subtext-color)] max-w-3xl mx-auto mb-12">
-            MisinfoX empowers users to detect, decode, and learn from misinformation — 
-            through AI-driven checks across WhatsApp, web, and browser extensions.
-        </p>
+<section id="features" class="py-20 transition-all duration-500">
+  <div class="max-w-7xl mx-auto px-6 text-center">
+    <h2 class="text-4xl sm:text-5xl font-bold mb-4 text-[var(--text-color)]">
+      Smarter<span class="text-[#00FF7F]"> Verification</span>, Stronger Awareness
+    </h2>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="feature-card">
-                <h3>Forwarded Message Flagging</h3>
-                <p>Detects viral or risky forwards and flags them instantly for deeper verification</p>
-            </div>
+    <p class="text-[var(--subtext-color)] max-w-3xl mx-auto mb-12">
+      MisinfoX helps you verify information directly while browsing — 
+      using an AI-powered browser extension that works in real time.
+    </p>
 
-            <div class="feature-card">
-                <h3>Real-Time Checking</h3>
-                <p>Highlights false or misleading claims while you browse, without leaving the page.</p>
-            </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      
+      <div class="feature-card">
+        <h3>Highlight & Verify Instantly</h3>
+        <p>Select any sentence or claim on a webpage and verify it with a single click.</p>
+      </div>
 
-            <div class="feature-card">
-                <h3>Privacy by Design</h3>
-                <p>Only Processes the message test,no personal data is stored</p>
-            </div>
+      <div class="feature-card">
+        <h3>Real-Time Claim Analysis</h3>
+        <p>Detects false, misleading, or suspicious content instantly without leaving the page.</p>
+      </div>
 
-            <div class="feature-card">
-                <h3>One-Click Verification</h3>
-                <p>Instantly sends highlighted text to MisinfoX’s AI for deeper analysis and sources.</p>
-            </div>
+      <div class="feature-card">
+        <h3>Privacy-First by Design</h3>
+        <p>Only the selected text is analyzed — no browsing history or personal data is stored.</p>
+      </div>
 
-            <div class="feature-card">
-                <h3>AI for facts not friction</h3>
-                <p>AI works as a reliable tool for verifying information combating misinformation .</p>
-            </div>
+      <div class="feature-card">
+        <h3>Context-Aware AI Verification</h3>
+        <p>Checks credibility, context, and source reliability instead of simple keyword matching.</p>
+      </div>
 
-            <div class="feature-card">
-                <h3>Protection beyond firewall</h3>
-                <p>Empowering truth through precision your reliable source in the world of doubt</p>
-            </div>
-        </div>
+      <div class="feature-card">
+        <h3>Source-Backed Verdicts</h3>
+        <p>Provides clear verdicts like True, False, Scam, or Suspicious with supporting signals.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Protection Where You Browse</h3>
+        <p>Designed to protect users directly on websites — where misinformation actually spreads.</p>
+      </div>
+
     </div>
+  </div>
 </section>
 
-<style>
-/* Existing Theme Variables */
-:root {
-    --bg-color: #ffffff;
-    --text-color: #0f1931;
-    --subtext-color: #0d1b2d;
-    --card-bg: #ffffff;
-    --card-border: rgba(0, 0, 0, 0.1);
-    --shadow-light: rgba(0, 0, 0, 0.15); /* Light mode card shadow */
-    --shadow-hover-light: rgba(0, 255, 127, 0.25); /* Light mode hover shadow */
-}
-
-html.dark {
-    --bg-color: #050b18;
-    --text-color: #ffffff;
-    --subtext-color: rgba(255, 255, 255, 0.7);
-    --card-bg: #0e172a;
-    --card-border: rgba(255, 255, 255, 0.1);
-    --shadow-light: rgba(255, 255, 255, 0.08); /* Dark mode card shadow */
-    --shadow-hover-light: rgba(0, 255, 127, 0.15); /* Dark mode hover shadow */
-}
-
-html, body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    transition: background-color 0.4s ease-in-out, color 0.4s ease-in-out;
-}
-
-/* 💡 General Feature Cards (Existing) */
-.feature-card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 16px;
-    padding: 24px;
-    text-align: left;
-    box-shadow: 0 4px 12px var(--shadow-light); /* Use new variable */
-    transition: all 0.3s ease;
-}
-
-.feature-card:hover {
-    transform: translateY(-6px);
-    border-color: #00FF7F;
-    box-shadow: 0 6px 18px var(--shadow-hover-light); /* Use new variable */
-}
-
-.feature-card h3 {
-    color: var(--text-color);
-    font-weight: 600;
-    font-size: 1.1rem;
-    margin-bottom: 8px;
-}
-
-.feature-card p {
-    color: var(--subtext-color);
-    font-size: 0.95rem;
-    line-height: 1.4;
-}
-
-/* 🖼️ NEW: Image Feature Cards with 3D Effect */
-.image-feature-card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 16px;
-    padding: 24px;
-    text-align: left;
-    /* Add perspective to the parent for 3D effect on children */
-    perspective: 1000px;
-    box-shadow: 0 4px 12px var(--shadow-light);
-    transition: all 0.4s ease; /* Transition for the card itself */
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* Align content to the left */
-}
-
-.image-feature-card img {
-    /* Initial 3D transform */
-    transform: rotateX(8deg) rotateY(0deg) translateZ(10px); /* Subtle initial tilt */
-    transform-style: preserve-3d; /* Crucial for child elements to preserve 3D space */
-    transition: transform 0.4s ease, box-shadow 0.4s ease; /* Transition for image transform and shadow */
-    box-shadow: 0 8px 16px var(--shadow-light), /* Main shadow */
-                0 20px 40px rgba(0, 0, 0, 0.05); /* Further depth for light mode */
-}
-
-html.dark .image-feature-card img {
-    box-shadow: 0 8px 16px var(--shadow-light), /* Main shadow */
-                0 20px 40px rgba(0, 0, 0, 0.03); /* Lighter shadow for dark mode */
-}
-
-
-.image-feature-card:hover {
-    transform: translateY(-8px); /* Card lifts slightly */
-    border-color: #00FF7F;
-    box-shadow: 0 6px 18px var(--shadow-hover-light),
-                0 15px 30px var(--shadow-hover-light); /* Enhanced shadow on hover */
-}
-
-.image-feature-card:hover img {
-    transform: rotateX(0deg) rotateY(0deg) translateZ(20px); /* Image straightens and lifts more */
-    box-shadow: 0 12px 24px var(--shadow-hover-light),
-                0 30px 60px var(--shadow-hover-light); /* Deeper shadow for image on hover */
-}
-
-.image-feature-card h3 {
-    color: var(--text-color);
-    font-weight: 600;
-    font-size: 1.1rem;
-    margin-top: 16px; /* Space between image and text */
-    margin-bottom: 8px;
-}
-
-.image-feature-card p {
-    color: var(--subtext-color);
-    font-size: 0.95rem;
-    line-height: 1.4;
-}
-</style>
-
- <!---================= HOW IT WORKS (filled) ================= -->
  <!-- ================= HOW IT WORKS ================= -->
 <section id="how-it-works" class="py-20 bg-[rgba(27,59,111,.25)]">
   <div class="max-w-7xl mx-auto px-6">
     <div class="text-center mb-12">
       <h2 class="text-3xl sm:text-4xl font-extrabold text-[var(--sky)]">How MisinfoX Works</h2>
-      <p class="mt-3 text-white/85 max-w-2xl mx-auto">Whether through WhatsApp or your browser, MisinfoX verifies content instantly.</p>
-    </div>
-
-    <!-- WhatsApp Bot Flow -->
-    <div class="mb-14">
-      <h3 class="text-2xl font-bold text-center mb-6 text-[var(--peach)]">WhatsApp Bot</h3>
-      <div class="grid lg:grid-cols-4 gap-6">
-        <div class="rounded-xl p-6 bg-[rgba(134,187,216,.12)] border border-[rgba(134,187,216,.25)]">
-          <div class="text-sm text-[var(--sky)]">Step 01</div>
-          <h3 class="mt-2 font-semibold text-white">Send or Forward a Message</h3>
-          <p class="mt-2 text-white/80 text-sm">Simply forward or type any message into the official MisinfoX WhatsApp chat.</p>
-        </div>
-
-        <div class="rounded-xl p-6 bg-[rgba(252,170,103,.12)] border border-[rgba(252,170,103,.3)]">
-          <div class="text-sm text-[var(--peach)]">Step 02</div>
-          <h3 class="mt-2 font-semibold text-white">AI Analyzes the Message</h3>
-          <p class="mt-2 text-white/80 text-sm">The bot checks the content using NLP and phishing detection models.</p>
-        </div>
-
-        <div class="rounded-xl p-6 bg-[rgba(255,227,71,.12)] border border-[rgba(255,227,71,.35)]">
-          <div class="text-sm text-[var(--yellow)]">Step 03</div>
-          <h3 class="mt-2 font-semibold text-white">Get the Verdict</h3>
-          <p class="mt-2 text-white/80 text-sm">You’ll instantly receive a verdict: <strong>True</strong>, <strong>False</strong>, <strong>Scam</strong>, or <strong>Suspicious</strong>.</p>
-        </div>
-
-        <div class="rounded-xl p-6 bg-[rgba(15,113,115,.14)] border border-[rgba(15,113,115,.35)]">
-          <div class="text-sm text-[var(--teal)]">Step 04</div>
-          <h3 class="mt-2 font-semibold text-white">Learn & Share Responsibly</h3>
-          <p class="mt-2 text-white/80 text-sm">See why a message was flagged and share verified info confidently.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Browser Extension Flow -->
-    <div>
-      <h3 class="text-2xl font-bold text-center mb-6 text-[var(--teal)]">Browser Extension</h3>
-      <div class="grid lg:grid-cols-4 gap-6">
-        <div class="rounded-xl p-6 bg-[rgba(134,187,216,.12)] border border-[rgba(134,187,216,.25)]">
-          <div class="text-sm text-[var(--sky)]">Step 01</div>
-          <h3 class="mt-2 font-semibold text-white">Highlight Text on a Website</h3>
-          <p class="mt-2 text-white/80 text-sm">Select any sentence or claim you want to verify on any webpage.</p>
-        </div>
-
-        <div class="rounded-xl p-6 bg-[rgba(252,170,103,.12)] border border-[rgba(252,170,103,.3)]">
-          <div class="text-sm text-[var(--peach)]">Step 02</div>
-          <h3 class="mt-2 font-semibold text-white">Click “Ask MisinfoX”</h3>
-          <p class="mt-2 text-white/80 text-sm">The extension instantly sends the text for analysis.</p>
-        </div>
-
-        <div class="rounded-xl p-6 bg-[rgba(255,227,71,.12)] border border-[rgba(255,227,71,.35)]">
-          <div class="text-sm text-[var(--yellow)]">Step 03</div>
-          <h3 class="mt-2 font-semibold text-white">AI Verifies the Claim</h3>
-          <p class="mt-2 text-white/80 text-sm">Checks credibility, context, and phishing risk in real time.</p>
-        </div>
-
-        <div class="rounded-xl p-6 bg-[rgba(15,113,115,.14)] border border-[rgba(15,113,115,.35)]">
-          <div class="text-sm text-[var(--teal)]">Step 04</div>
-          <h3 class="mt-2 font-semibold text-white">View Verdict Instantly</h3>
-          <p class="mt-2 text-white/80 text-sm">Get the verdict — <strong>True</strong>, <strong>False</strong>, <strong>Scam</strong>, or <strong>Suspicious</strong> — right on the page.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= WHATSAPP BOT ================= -->
- <section id="whatsapp-bot" class="py-20"> <div class="max-w-7xl mx-auto px-6 space-y-14">
-        <div class="text-center mb-12">
-      <h2 class="text-3xl sm:text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[var(--sky)] to-[var(--peach)]">
-        WhatsApp Bot – Suspicious Message Dectection
-      </h2>
       <p class="mt-3 text-white/85 max-w-2xl mx-auto">
-        Forward any suspicious message to the bot, get a verdict, a short explanation, and sources—right inside WhatsApp.
-      </p>
+  MisinfoX instantly verifies online content using an AI-powered browser extension.
+</p>
     </div>
+<!-- Browser Extension Flow -->
+<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
 
-<!-- Row 1 -->
-<div class="grid lg:grid-cols-2 gap-10 items-center">
-  <div>
-    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[rgba(134,187,216,.15)] text-[var(--sky)] ring-1 ring-[rgba(134,187,216,.35)]">WhatsApp Bot</span>
-    <h2 class="mt-3 text-3xl sm:text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[var(--sky)] to-[var(--peach)]">Fact checks in chat</h2>
-    <p class="mt-3 text-white/85 max-w-xl">Forward any suspicious message to the bot to get a verdict, a short explanation, and source links—without leaving WhatsApp.</p>
-
-    <div class="mt-6 grid gap-3">
-      <div class="compact-card rounded-lg p-4 bg-[rgba(134,187,216,.12)] border border-[rgba(134,187,216,.25)]">
-        <h3 class="font-semibold text-white">1.Send or forward a message</h3>
-        <p class="text-white/85 text-sm mt-1">Share any claim or forwarded chain message to the MisinfoX number.</p>
-      </div>
-      <div class="compact-card rounded-lg p-4 bg-[rgba(252,170,103,.12)] border border-[rgba(252,170,103,.3)]">
-        <h3 class="font-semibold text-white">2. Instant verdict</h3>
-        <p class="text-white/85 text-sm mt-1">Returns “True”, “False”, or “Unverified” with a confidence-friendly tone.</p>
-      </div>
-    </div>
-
-    <div class="mt-6 flex gap-3">
-      <a href="http://wa.me/+14155238886?text=join%20same-themselves" target="_blank" rel="noopener noreferrer"
-         class="bg-[var(--teal)] hover:bg-[#0d5e60] text-white px-5 py-3 rounded-lg text-sm font-semibold shadow-md flex items-center">
-        <i data-feather="message-square" class="mr-2 w-4 h-4"></i>Try the WhatsApp Bot
-      </a>
-      <a href="#features" class="btn-outline px-5 py-3 rounded-lg text-sm font-semibold">See all features</a>
-    </div>
+  <!-- STEP 01 -->
+  <div class="rounded-xl p-6 bg-[rgba(134,187,216,.12)] border border-[rgba(134,187,216,.25)]">
+    <img
+      src="assets/step1.png"
+      alt="Highlight text on webpage"
+      class="how-img zoomed mb-4"
+    />
+    <div class="text-sm text-[var(--sky)]">Step 01</div>
+    <h3 class="mt-2 font-semibold text-white">Highlight Text on a Website</h3>
+    <p class="mt-2 text-white/80 text-sm">
+      Select any sentence or claim you want to verify on any webpage.
+    </p>
   </div>
-  <figure class="rounded-2xl overflow-hidden border border-[rgba(134,187,216,.25)] bg-[var(--card-bg-dark)]/70 shadow-lg">
-    <img src="assets/Screenshot (111).png" alt="Chain message flagged with verdict" class="w-full h-full object-cover">
-  </figure>
-</div>
 
-<!-- Row 2 (alternating) -->
-<div class="grid lg:grid-cols-2 gap-10 items-center">
-  <figure class="order-2 lg:order-1 rounded-2xl overflow-hidden border border-[rgba(134,187,216,.25)] bg-[var(--card-bg-dark)]/70 shadow-lg">
-    <img src="assets/wpscreenschot2.png" alt="True verdict example" class="w-full h-full object-cover">
-  </figure>
-  <div class="order-1 lg:order-2">
-    <div class="compact-card rounded-lg p-4 bg-[rgba(255,227,71,.12)] border border-[rgba(255,227,71,.35)]">
-      <h3 class="font-semibold text-white"> 3. Explanation + sources</h3>
-      <p class="text-white/85 text-sm mt-1">Short, readable explanation with reputable links to check further.</p>
-    </div>
-    <div class="mt-3 compact-card rounded-lg p-4 bg-[rgba(15,113,115,.14)] border border-[rgba(15,113,115,.35)]">
-      <h3 class="font-semibold text-white"> 4. Share responsibly</h3>
-      <p class="text-white/85 text-sm mt-1">Use the response to inform others and avoid amplifying misinformation.</p>
-    </div>
-
-    <ul class="mt-6 grid sm:grid-cols-2 gap-3 text-white/90 text-sm">
-      <li class="rounded-md p-3 bg-[rgba(134,187,216,.12)] border border-[rgba(134,187,216,.25)]">Forwarded messages supported</li>
-      <li class="rounded-md p-3 bg-[rgba(252,170,103,.12)] border border-[rgba(252,170,103,.3)]">Plain-language responses</li>
-      <li class="rounded-md p-3 bg-[rgba(255,227,71,.12)] border border-[rgba(255,227,71,.35)]">Credible sources included</li>
-      <li class="rounded-md p-3 bg-[rgba(15,113,115,.14)] border border-[rgba(15,113,115,.35)]">No account or app install</li>
-    </ul>
+  <!-- STEP 02 -->
+  <div class="rounded-xl p-6 bg-[rgba(252,170,103,.12)] border border-[rgba(252,170,103,.3)]">
+    <img
+      src="assets/step2.png"
+      alt="Ask MisinfoX popup"
+      class="how-img zoomed mb-4"
+    />
+    <div class="text-sm text-[var(--peach)]">Step 02</div>
+    <h3 class="mt-2 font-semibold text-white">Click “Ask MisinfoX”</h3>
+    <p class="mt-2 text-white/80 text-sm">
+      The extension instantly sends the text for analysis.
+    </p>
   </div>
+
+  <!-- STEP 03 -->
+  <div class="rounded-xl p-6 bg-[rgba(255,227,71,.12)] border border-[rgba(255,227,71,.35)]">
+    <img
+      src="assets/step3.png"
+      alt="AI analyzing content"
+      class="how-img zoomed mb-4"
+    />
+    <div class="text-sm text-[var(--yellow)]">Step 03</div>
+    <h3 class="mt-2 font-semibold text-white">AI Verifies the Claim</h3>
+    <p class="mt-2 text-white/80 text-sm">
+      Checks credibility, context, and phishing risk in real time.
+    </p>
+  </div>
+
+  <!-- STEP 04 -->
+  <div class="rounded-xl p-6 bg-[rgba(15,113,115,.14)] border border-[rgba(15,113,115,.35)]">
+    <img
+      src="assets/step4.png"
+      alt="MisinfoX verdict result"
+      class="how-img zoomed mb-4"
+    />
+    <div class="text-sm text-[var(--teal)]">Step 04</div>
+    <h3 class="mt-2 font-semibold text-white">View Verdict Instantly</h3>
+    <p class="mt-2 text-white/80 text-sm">
+      Get the verdict — <strong>True</strong>, <strong>False</strong>,
+      <strong>Scam</strong>, or <strong>Suspicious</strong>.
+    </p>
+  </div>
+
 </div>
-</div> 
-</section>
-
-
-<!-- Optional CSS Enhancement -->
-<style>
-  /* WhatsApp gallery hover pop */
-  #whatsapp-bot figure {
-    transition: transform .25s ease, box-shadow .25s ease;
-  }
-  #whatsapp-bot figure:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 24px rgba(0, 0, 0, .25);
-  }
-</style>
-
-
-<!-- ================= TEAM SECTION ================= -->
-<section id="team" class="py-20 bg-[rgba(27,59,111,.25)]">
-  <div class="max-w-7xl mx-auto px-6">
-    
-    <!-- Section Header -->
-    <div class="text-center mb-12">
-      <h2 class="text-3xl sm:text-4xl font-extrabold text-[var(--sky)]">Meet Team Horizon</h2>
-      <p class="mt-3 text-white/85 max-w-2xl mx-auto">
-        Six minds. One mission — safer Information for everyone.
-      </p>
-    </div>
-
-    <!-- Cards -->
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-
-      <!-- Rajveer -->
-      <article class="rounded-2xl border border-[rgba(134,187,216,.25)] bg-[var(--card-bg-dark)]/70 p-6 text-center">
-        <div class="avatar-wrap mx-auto h-28 w-28 rounded-full ring-4 ring-[rgba(255,227,71,.35)] overflow-hidden shadow-[0_0_0_6px_rgba(27,59,111,.35)] bg-white">
-          <img src="assets/raj2.jpeg" alt="Rajveer Singh Bisht" class="avatar-img">
-        </div>
-        <h3 class="mt-4 text-white font-semibold">Rajveer Singh Bisht</h3>
-        <p class="text-[var(--yellow)] text-sm font-medium">Team Leader & AI Integration Specialist</p>
-        <p class="mt-2 text-white/85 text-sm">
-          Led the project vision, coordinated team efforts, and developed the WhatsApp chatbot to make MisinfoX more accessible to users.
-        </p>
-      </article>
-
-      <!-- Tamanna -->
-      <article class="rounded-2xl border border-[rgba(134,187,216,.25)] bg-[var(--card-bg-dark)]/70 p-6 text-center">
-        <div class="avatar-wrap mx-auto h-28 w-28 rounded-full ring-4 ring-[rgba(252,170,103,.35)] overflow-hidden shadow-[0_0_0_6px_rgba(27,59,111,.35)] bg-white">
-          <img src="assets/tam2.jpeg" alt="Tamanna Bhatt" class="avatar-img">
-        </div>
-        <h3 class="mt-4 text-white font-semibold">Tamanna Bhatt</h3>
-        <p class="text-[var(--peach)] text-sm font-medium">Full-Stack Website Developer</p>
-        <p class="mt-2 text-white/85 text-sm">
-          Crafted the website’s frontend and backend, designed the interface, and ensured MisinfoX delivers a smooth and engaging user experience.
-        </p>
-      </article>
-
-      <!-- Saksham -->
-      <article class="rounded-2xl border border-[rgba(134,187,216,.25)] bg-[var(--card-bg-dark)]/70 p-6 text-center">
-        <div class="avatar-wrap mx-auto h-28 w-28 rounded-full ring-4 ring-[rgba(134,187,216,.35)] overflow-hidden shadow-[0_0_0_6px_rgba(27,59,111,.35)] bg-white">
-          <img src="assets/sak2.jpeg" alt="Saksham Rana" class="avatar-img">
-        </div>
-        <h3 class="mt-4 text-white font-semibold">Saksham Rana</h3>
-        <p class="text-[var(--sky)] text-sm font-medium">Extension Developer</p>
-        <p class="mt-2 text-white/85 text-sm">
-          Designed and built the Chrome extension, implementing misinformation detection logic and ensuring seamless integration with search results.
-        </p>
-      </article>
-
-      <!-- New Member 1 -->
-      <article class="rounded-2xl border border-[rgba(134,187,216,.25)] bg-[var(--card-bg-dark)]/70 p-6 text-center">
-        <div class="avatar-wrap mx-auto h-28 w-28 rounded-full ring-4 ring-[rgba(255,255,255,.35)] overflow-hidden shadow-[0_0_0_6px_rgba(27,59,111,.35)] bg-white">
-          <img src="assets/sam2.jpeg" alt="samridhi" class="avatar-img">
-        </div>
-        <h3 class="mt-4 text-white font-semibold">Samridhi Sajwan</h3>
-        <p class="text-[var(--pink)] text-sm font-medium">UI/UX & Visual Designer</p>
-        <p class="mt-2 text-white/85 text-sm">
-          Created the visual identity and user experience design for both the extension and website, focusing on clarity and user engagement.
-        </p>
-      </article>
-
-      <!-- member 5 -->
-      <article class="rounded-2xl border border-[rgba(134,187,216,.25)] bg-[var(--card-bg-dark)]/70 p-6 text-center">
-        <div class="avatar-wrap mx-auto h-28 w-28 rounded-full ring-4 ring-[rgba(255,227,71,.35)] overflow-hidden shadow-[0_0_0_6px_rgba(27,59,111,.35)] bg-white">
-          <img src="assets/shri.jpeg" alt="shrikant" class="avatar-img">
-        </div>
-        <h3 class="mt-4 text-white font-semibold">Shrikant Thapliyal</h3>
-        <p class="text-[var(--yellow)] text-sm font-medium">Data Analyst & Model Training Assistant</p>
-        <p class="mt-2 text-white/85 text-sm">
-          Assisted in data collection and preprocessing, contributing to the training and evaluation of AI models for misinformation detection.
-        </p>
-      </article>
-
-      <!--Member 6 -->
-      <article class="rounded-2xl border border-[rgba(134,187,216,.25)] bg-[var(--card-bg-dark)]/70 p-6 text-center">
-        <div class="avatar-wrap mx-auto h-28 w-28 rounded-full ring-4 ring-[rgba(134,187,216,.35)] overflow-hidden shadow-[0_0_0_6px_rgba(27,59,111,.35)] bg-white">
-          <img src="assets/saumaya.jpeg" alt="Saumaya" class="avatar-img">
-        </div>
-        <h3 class="mt-4 text-white font-semibold">Saumaya Singhal</h3>
-        <p class="text-[var(--sky)] text-sm font-medium">Presentation & Research Lead
-        </p>
-        <p class="mt-2 text-white/85 text-sm">
-          Led research efforts on misinformation trends and prepared presentation materials to effectively communicate the project’s impact and goals.
-        </p>
-      </article>
-
-    </div>
-
-    <!-- Tagline -->
-    <div class="mt-10 rounded-xl border border-[rgba(134,187,216,.25)] bg-[var(--card-bg-dark)]/70 p-6 text-center">
-      <p class="text-white/90 text-base">
-        “Six college friends who started with a hackathon idea — and built MisinfoX to make the internet a more truthful place.”
-      </p>
-    </div>
-
   </div>
 </section>
-
 <!-- ================= CTA (bottom) ================= -->
 <section class="py-16">
   <div class="max-w-6xl mx-auto px-6 rounded-2xl border border-[rgba(134,187,216,.25)] bg-[rgba(27,59,111,.45)] p-10 text-center">
     <h3 class="text-3xl font-extrabold text-white">Ready to try MisinfoX?</h3>
     <p class="mt-2 text-white/85">Install the extension and start browsing with confidence in under a minute.</p>
     <div class="mt-6">
-      <a href="#" class="btn-download px-6 py-3 rounded-lg text-base font-semibold shadow-lg">Download Extension</a>
+      <a href="https://github.com/Tamanna-3/MisinfoX-Chrome-Extension" target="_blank"  class="btn-download px-6 py-3 rounded-lg text-base font-semibold shadow-lg">Download Extension</a>
     </div>
   </div>
 </section>
@@ -1357,4 +451,3 @@ html.dark .image-feature-card img {
 </body>
 
 <!-- ================= END BODY ================= -->
-
